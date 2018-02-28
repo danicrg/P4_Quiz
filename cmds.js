@@ -235,8 +235,8 @@ exports.playCmd = rl => {
  * @param rl Objeto readline usado para implementar CLI.
  */
 exports.creditsCmd = rl => {
-    log("Autor de la práctica:");
-    log("DANIEL", 'green');
+    log("Autores de la práctica:");
+    log("DANIEL CARLANDER", 'green');
 
     rl.prompt();
 };
