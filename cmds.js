@@ -196,7 +196,7 @@ exports.playCmd = rl => {
             rl.prompt();
         } else {
             try {
-                let id = (i--)*Math.random().toFixed(0);
+                let id = toBeResolved.length*Math.random().toFixed(0);
                 let posicion = toBeResolved.indexOf(parseInt(id));
                 if (posicion !== -1) {
                     let quiz = model.getByIndex(id); //saca el quiz a preguntar
