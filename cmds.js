@@ -217,19 +217,18 @@ exports.editCmd = (rl, id) => {
  */
 exports.testCmd = (rl, id) => {
 
-    if (typeof id === "undefined") {
-        errorlog(`Falta el parámetro id.`);
-        rl.prompt();
-    } else {
-        try {
-
-            const quiz = model.getByIndex(id);
+    validateId(id)
+        .then(id => models.quiz.findById(id))
+        .then (quiz => {
+            if (!quiz) {
+                throw new Error(`No existe un quiz asociado al id=${id}.`);
+            }
             let pregunta = quiz.question.toString();
             rl.question(colorize(pregunta + '? ', 'red'), answer => {
                 let respuesta = answer.toLowerCase().trim();
                 let res = quiz.answer.toLowerCase().trim();
 
-                if (respuesta === res){
+                if (respuesta === res) {
                     log(`Su respuesta es correcta. `);
                     biglog('Correcta', 'green');
                     rl.prompt();
@@ -239,12 +238,10 @@ exports.testCmd = (rl, id) => {
                     rl.prompt();
                 }
             });
-        } catch (error) {
-            errorlog(error.message);
-            rl.prompt();
         }
-    }
-    rl.prompt();
+
+        )
+
 
 };
 
