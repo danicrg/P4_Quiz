@@ -276,7 +276,6 @@ exports.playCmd = rl => {
                     rl.prompt();
                 } else {
                     let id = Math.floor(Math.random() * toBeResolved.length);
-                    let posicion = toBeResolved.indexOf(parseInt(id));
                     let quiz = toBeResolved[id];
                     toBeResolved.splice(id, 1);
                             return makeQuestion(rl, `${quiz.question}? `)
