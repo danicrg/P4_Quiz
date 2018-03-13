@@ -236,7 +236,7 @@ exports.testCmd = (rl, id) => {
                     } else {
                         //log(`Su respuesta es incorrecta. `);
                         //biglog('Incorrecta', 'red');
-                        log('Correcta', 'green');
+                        log('Incorrecta', 'red');
                         rl.prompt();
                     }
                 });
