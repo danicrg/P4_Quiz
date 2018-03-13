@@ -229,12 +229,14 @@ exports.testCmd = (rl, id) => {
                     let res = quiz.answer.toLowerCase().trim();
 
                     if (respuesta === res) {
-                        log(`Su respuesta es correcta. `);
-                        biglog('Correcta', 'green');
+                        //log(`Su respuesta es correcta. `);
+                        //biglog('Correcta', 'green');
+                        log('Correcta', 'green');
                         rl.prompt();
                     } else {
-                        log(`Su respuesta es incorrecta. `);
-                        biglog('Incorrecta', 'red');
+                        //log(`Su respuesta es incorrecta. `);
+                        //biglog('Incorrecta', 'red');
+                        log('Correcta', 'green');
                         rl.prompt();
                     }
                 });
