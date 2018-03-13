@@ -216,7 +216,7 @@ exports.editCmd = (rl, id) => {
  * @param rl Objeto readline usado para implementar CLI.
  */
 exports.testCmd = (rl, id) => {
-
+/*
     validateId(id)
         .then(id => models.quiz.findById(id))
         .then (quiz => {
@@ -251,7 +251,32 @@ exports.testCmd = (rl, id) => {
         .then (() => {
             rl.prompt();
         });
-
+*/
+    validateId(id)
+        .then(id => models.quiz.findById(id))
+        .then(quiz => {
+            if (!quiz) {
+                throw new Error (`No existe un quiz asociado al id = ${id}.`);
+            }
+            return makeQuestion(rl, `${quiz.question} ?  `)
+                .then(a => {
+                    if (a.toLowerCase().trim() === quiz.answer.toLowerCase().trim()){
+                        log('Correcta', 'green');
+                    } else {
+                        log('Incorrecta', 'green');
+                    }
+                });
+        })
+        .catch(Sequelize.ValidationError, error => {
+            errorlog('El quiz es erroneo: ');
+            error.errors.forEach(({message}) => errorlog(message));
+        })
+        .catch(error => {
+            errorlog(error.message);
+        })
+        .then(() => {
+            rl.prompt();
+        });
 
 };
 
@@ -342,7 +367,7 @@ exports.playCmd = rl => {
 
                 alreadyAsked.push(quiz.id);
 
-                return makeQuestion(rl, `${quiz.question} ? `)
+                return makeQuestion(rl, `${quiz.question}? `)
                     .then(a => {
                         if (a.toLowerCase().trim() === quiz.answer.toLowerCase().trim()){
                             log(`CORRECTO - Lleva ${++score} aciertos`);
@@ -357,11 +382,6 @@ exports.playCmd = rl => {
             .catch(error => {
                 errorlog(error.message);
             });
-        /*
-            .then(() => {
-                rl.prompt();
-            });
-            */
     };
     playloop();
 
