@@ -223,7 +223,7 @@ exports.testCmd = (rl, id) => {
             if (!quiz) {
                 throw new Error(`No existe un quiz asociado al id=${id}.`);
             }
-            return makeQuestion(rl, `${quiz.question}? `)
+            return makeQuestion(rl, `${quiz.question} ? `)
                 .then(ans => {
                     let respuesta = ans.toLowerCase().trim();
                     let res = quiz.answer.toLowerCase().trim();
@@ -236,7 +236,7 @@ exports.testCmd = (rl, id) => {
                     } else {
                         //log(`Su respuesta es incorrecta. `);
                         //biglog('Incorrecta', 'red');
-                        log('Incorrecta', 'green');
+                        log('Incorrecta', 'red');
                         rl.prompt();
                     }
                 });
