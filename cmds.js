@@ -237,7 +237,7 @@ exports.testCmd = (rl, id) => {
                         biglog('Incorrecta', 'red');
                         rl.prompt();
                     }
-                })
+                });
         })
         .catch(Sequelize.ValidationError, error => {
             errorlog('El quiz es erroneo:');
@@ -305,6 +305,7 @@ exports.playCmd = rl => {
                 }
             }
             play();
+
         })
         .catch(Sequelize.ValidationError, error => {
             errorlog('El quiz es erroneo:');
