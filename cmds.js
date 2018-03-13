@@ -265,12 +265,13 @@ exports.testCmd = (rl, id) => {
 exports.playCmd = rl => {
     let score = 0;
     let toBeResolved = [];
-    models.quiz.findAll()
-        .each(quiz => {
-            toBeResolved.push(quiz);
-        })
-        .then( () => {
-            const play = () => {
+
+    const play = () => {
+        models.quiz.findAll()
+            .each(quiz => {
+                toBeResolved.push(quiz);
+            })
+            .then(() => {
                 if (toBeResolved.length === 0) {
                     log(`No hay nada más que preguntar.`);
                     log(`Fin del juego. Aciertos: ${score}`);
@@ -280,45 +281,43 @@ exports.playCmd = rl => {
                     let id = Math.floor(Math.random() * toBeResolved.length);
                     let quiz = toBeResolved[id];
                     toBeResolved.splice(id, 1);
-                            return makeQuestion(rl, `${quiz.question}? `)
-                                .then( ans => {
-                                    if (ans.toLowerCase().trim() === quiz.answer.toLowerCase().trim()) {
-                                        score++;
-                                        log(`CORRECTO - Lleva ${score} aciertos.`);
-                                        play();
-                                    } else {
-                                        log(`INCORRECTO.`);
-                                        log(`Fin del juego. Aciertos: ${score}`);
-                                        biglog(score, 'magenta');
-                                        rl.prompt();
-                                    }
-                                })
-                                .catch(Sequelize.ValidationError, error => {
-                                errorlog('El quiz es erroneo:');
-                                error.errors.forEach(({message}) => errorlog(message));
-                                })
-                                .catch(error => {
-                                    errorlog(error.message);
-                                })
-                                .then (() => {
-                                    rl.prompt();
-                                });
+                    return makeQuestion(rl, `${quiz.question}? `)
+                        .then(ans => {
+                            if (ans.toLowerCase().trim() === quiz.answer.toLowerCase().trim()) {
+                                log(`CORRECTO - Lleva ${++score} aciertos.`);
+                                play();
+                            } else {
+                                log(`INCORRECTO.`);
+                                log(`Fin del juego. Aciertos: ${score}`);
+                                biglog(score, 'magenta');
+                                rl.prompt();
+                            }
+                        })
+                        .catch(Sequelize.ValidationError, error => {
+                            errorlog('El quiz es erroneo:');
+                            error.errors.forEach(({message}) => errorlog(message));
+                        })
+                        .catch(error => {
+                            errorlog(error.message);
+                        })
+                        .then(() => {
+                            rl.prompt();
+                        });
 
                 }
-            }
-            play();
-
-        })
-        .catch(Sequelize.ValidationError, error => {
-            errorlog('El quiz es erroneo:');
-            error.errors.forEach(({message}) => errorlog(message));
-        })
-        .catch(error => {
-            errorlog(error.message);
-        })
-        .then (() => {
-            rl.prompt();
-        });
+            })
+            .catch(Sequelize.ValidationError, error => {
+                errorlog('El quiz es erroneo:');
+                error.errors.forEach(({message}) => errorlog(message));
+            })
+            .catch(error => {
+                errorlog(error.message);
+            })
+            .then(() => {
+                rl.prompt();
+            });
+    };
+    play();
 };
 
 
