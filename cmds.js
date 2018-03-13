@@ -274,7 +274,7 @@ exports.playCmd = rl => {
                 if (toBeResolved.length === 0) {
                     log(`No hay nada más que preguntar.`);
                     log(`Fin del juego. Aciertos: ${score}`);
-                    biglog(score, 'magenta');
+                    //biglog(score, 'magenta');
                     rl.prompt();
                 } else {
                     let id = Math.floor(Math.random() * toBeResolved.length);
@@ -289,7 +289,7 @@ exports.playCmd = rl => {
                                     } else {
                                         log(`INCORRECTO.`);
                                         log(`Fin del juego. Aciertos: ${score}`);
-                                        biglog(score, 'magenta');
+                                        //biglog(score, 'magenta');
                                         rl.prompt();
                                     }
                                 })
